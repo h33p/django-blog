@@ -1,13 +1,8 @@
-{% load static %}
-{% load markdown %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/syntax.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-
-<div class="pre-content">
-	<div class="content">
+{% extends "base.html" %}
+	{% load markdown %}
+	{% block content %}
 		<h1>{{ post.title }}</h1>
 		<p>Published: {{ post.pub_date }}</p>
 
 		<p>{{ post.md_data | markdown | safe }}</p>
-	</div>
-</div>
+	{% endblock %}

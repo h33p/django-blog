@@ -1,0 +1,21 @@
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/syntax.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
+
+<div class="pre-content">
+
+	<ul class="navbar">
+		<li><a href="/"{% if request.path == '/' or '/index' in request.path %} class="active"{% endif %}>Home</a></li>
+		<li><a href="/blog"{% if '/blog' in request.path %} class="active"{% endif %}>Blog</a></li>
+		<li><a href="/contact"{% if '/contact' in request.path %} class="active"{% endif %}>Contact</a></li>
+		<li><a href="/about"{% if '/about' in request.path %} class="active"{% endif %}>About</a></li>
+	</ul> 
+
+	<div class="content">
+
+		{% block content %}
+		{% endblock %}
+	</div>
+</div>

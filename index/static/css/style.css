@@ -25,13 +25,15 @@ h4 {
     text-align: left;
     background-color: rgba(100, 100, 100, 0.1);
     backdrop-filter: blur(10px);
-  box-shadow: 1px 1px 100px #260026;
+    box-shadow: 1px 1px 100px #260026;
+    margin-top: min(55px, calc(clamp((1vw - 1vh) * 0.5, 1vh, 0vh) * 10));
+    margin: cubic-bezier(0px, 1px)
 }
 
 .content {
     margin: 30px;
+    width: min(90vw, max(60vw, 30cm));
     max-width: max(60vw, 30cm);
-    min-width: 60vw;
 }
 
 body {
