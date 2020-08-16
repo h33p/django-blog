@@ -1,3 +1,5 @@
+@import "./colors.scss";
+
 .highlight .hll { background-color: #49483e }
 .highlight {
   color: #5bbcac;
@@ -5,7 +7,7 @@
   text-align: left;
   display: inline-block;
   backdrop-filter: blur(10px);
-  box-shadow: 1px 1px 20px #260026;
+  box-shadow: 1px 1px 20px $shadow-color;
   max-width: 100%;
   overflow: scroll;
   overflow-x: auto;
@@ -32,9 +34,9 @@
 .highlight .c { color: #2aa1ae } /* + Comment */
 .highlight .err { color: #e0211d; background-color: #1e0010 } /* + Error */
 .highlight .k { color: #3397dd } /* + Keyword */
-.highlight .l { color: #d9574 } /* + Literal */
+.highlight .l { color: #0d9574 } /* + Literal */
 .highlight .n { color: #afafaf } /* + Name */
-.highlight .o { color: #92672 } /* Operator */
+.highlight .o { color: #092672 } /* Operator */
 .highlight .p { color: #ce87d7 } /* + Punctuation */
 .highlight .ch { color: #2aa1ae } /* Comment.Hashbang */
 .highlight .cm { color: #2aa1ae } /* Comment.Multiline */

@@ -1,0 +1,93 @@
+@import "./colors.scss";
+
+a {
+    color: $basetext;
+}
+
+h1 {
+    color: #4f97d7;
+}
+
+h2 {
+    color: #2d9574;
+}
+
+h3 {
+    color: #67b11d;
+}
+
+h4 {
+    color: #b1951d;
+}
+
+button {
+	border: none;
+	color: white;
+	background-color: $active-button-color;
+	border-width: 10px;
+	font-size: 130%;
+	padding: 6px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.root {
+    display: inline-block;
+    margin: calc(min(10px, 1vw));
+    max-width: 100%;
+    text-align: left;
+    margin-top: calc(min(55px, calc(clamp((1vw - 1vh) * 0.5, 1vh, 0vh) * 5)));
+}
+
+.pre-content {
+    display: inline-block;
+    max-width: 100%;
+    text-align: left;
+    background-color: rgba(100, 100, 100, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 1px 1px 100px $shadow-color;
+}
+
+.content {
+    margin: 30px;
+    width: calc(min(90vw, max(60vw, 30cm)));
+    max-width: calc(max(60vw, 30cm));
+	overflow: hidden;
+}
+
+.content img {
+	max-width: 100%;
+}
+
+body {
+    background-color: $body-color;
+    color: #b2b2b2;
+    text-align: center;
+}
+
+.nobreak {
+    word-break: keep-all;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+	text-align: left;
+}
+
+.centered {
+    text-align: center;
+}
+
+* {
+    font-family: "Cascadia Code PL";
+}
+
+@font-face {
+    font-family: "Cascadia Code PL";
+    src: url(../CascadiaPL.ttf);
+}
+

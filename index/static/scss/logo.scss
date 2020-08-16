@@ -1,58 +1,20 @@
-a {
-    color: #ffafd7;
-}
-
-h1 {
-    color: #4f97d7;
-}
-
-h2 {
-    color: #2d9574;
-}
-
-h3 {
-    color: #67b11d;
-}
-
-h4 {
-    color: #b1951d;
-}
-
-.root {
-    display: inline-block;
-    margin: min(10px, 1vw);
-    max-width: 100%;
-    text-align: left;
-    margin-top: min(55px, calc(clamp((1vw - 1vh) * 0.5, 1vh, 0vh) * 5));
-}
-
-.pre-content {
-    display: inline-block;
-    max-width: 100%;
-    text-align: left;
-    background-color: rgba(100, 100, 100, 0.1);
-    backdrop-filter: blur(10px);
-    box-shadow: 1px 1px 100px #260026;
-}
-
-.content {
-    margin: 30px;
-    width: min(90vw, max(60vw, 30cm));
-    max-width: max(60vw, 30cm);
-}
+@import "./colors.scss";
 
 .logo {
     margin: 30px;
-    width: min(90vw, max(60vw, 30cm));
-    max-width: max(60vw, 30cm);
+    width: calc(min(90vw, max(60vw, 30cm)));
+    max-width: calc(max(60vw, 30cm));
     display: grid;
+}
+
+.logo a {
+	text-decoration: none;
 }
 
 .logo1, .logo2 {
     grid-column: 1;
     grid-row: 1;
-    text-shadow: 1px 1px 20px #ff86f8;
-    background-codlor: #0a0814;
+    text-shadow: 1px 1px 20px $glow-color;
 }
 
 .logo1{
@@ -116,6 +78,7 @@ h4 {
         opacity: 0;
     }
 }
+
 @keyframes logo-flicker {
     from {
         opacity: 1;
@@ -166,36 +129,5 @@ h4 {
     to {
         opacity: 1;
     }
-}
-
-body {
-    background-color: #0a0814;
-    color: #b2b2b2;
-    text-align: center;
-}
-
-.nobreak {
-    word-break: keep-all;
-}
-
-.right {
-    text-align: right;
-}
-
-.left {
-	text-align: left;
-}
-
-.centered {
-    text-align: center;
-}
-
-* {
-    font-family: "Cascadia Code PL";
-}
-
-@font-face {
-    font-family: "Cascadia Code PL";
-    src: url(../CascadiaPL.ttf);
 }
 

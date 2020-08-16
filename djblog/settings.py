@@ -25,13 +25,13 @@ SECRET_KEY = 'y!d&ggp#s^2gsfdk!_^9o=67f^a05$v+$hu7(f^#v4jl2(k4an'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['blaz.is', '192.168.1.185', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'markdownx',
+    'compressor',
     'index.apps.IndexConfig',
     'blog.apps.BlogConfig',
     'django.contrib.admin',
@@ -123,3 +123,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = 'static_data'
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
+]
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)

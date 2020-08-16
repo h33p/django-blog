@@ -1,8 +1,13 @@
 
+{% load compress %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/syntax.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
+
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static 'scss/syntax.scss' %}">
+<link rel="stylesheet" type="text/x-scss" href="{% static 'scss/style.scss' %}">
+<link rel="stylesheet" type="text/x-scss" href="{% static 'scss/navbar.scss' %}">
+<link rel="stylesheet" type="text/x-scss" href="{% static 'scss/logo.scss' %}">
+{% endcompress %}
 
 <div class="root">
 
@@ -27,8 +32,10 @@
 	<ul class="navbar">
 		<li><a href="/"{% if request.path == '/' or '/index' in request.path %} class="active"{% endif %}>Home</a></li>
 		<li><a href="/blog"{% if '/blog' in request.path %} class="active"{% endif %}>Blog</a></li>
-		<li><a href="/contact"{% if '/contact' in request.path %} class="active"{% endif %}>Contact</a></li>
+		<li><a href="/portfolio"{% if '/portfolio' in request.path %} class="active"{% endif %}>Portfolio</a></li>
 		<li><a href="/about"{% if '/about' in request.path %} class="active"{% endif %}>About</a></li>
+		<li style="float:right"><a href="/login"{% if '/login' in request.path %} class="active"{% endif %}>Login</a></li>
+		<li style="float:right"><a href="https://photo.blaz.is">Photography</a></li>
 	</ul> 
 
 	<div class="content">
@@ -36,5 +43,9 @@
 		{% block content %}
 		{% endblock %}
 	</div>
+	</div>
+
+	<div class="centered">
+		<p>Made with clean code</p>
 	</div>
 </div>

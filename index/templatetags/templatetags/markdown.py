@@ -82,7 +82,9 @@ def shortdown(value):
     left = mstr[:lbtrim_len]
     right = mstr[lbtrim_len:]
 
-    trimmed = left + right.splitlines()[0]
+    right_lines = right.splitlines()
+
+    trimmed = left + (right_lines[0]) if len(right_lines) > 0 else ""
 
     renderer = ShortdownRenderer()
     md_rend = md.Markdown(renderer=renderer, plugins=[''])

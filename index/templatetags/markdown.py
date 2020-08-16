@@ -2,6 +2,7 @@ from django import template
 from django.template.defaultfilters import stringfilter
 
 import mistune as md
+from mistune import escape
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name, _iter_lexerclasses
 from pygments.formatters import HtmlFormatter
@@ -69,8 +70,11 @@ class CustomizedRenderer(md.Renderer):
 
 class ShortdownRenderer(md.Renderer):
 
+    def header(self, text, level, raw=None):
+        return '%s' % (text)
+
     def link(self, link, title, text):
-        return '<a title="%s">%s</a>' % (title, text)
+        return '%s' % escape(text, quote=True)
 
 
 @register.filter()
@@ -78,11 +82,13 @@ class ShortdownRenderer(md.Renderer):
 def shortdown(value):
     max_len = 500
     lbtrim_len = 100
-    mstr = (value[:(max_len - 3)] + "...") if len(value) > max_len else value
+    mstr = (value[:(max_len - 3)].strip() + "...") if len(value) > max_len else value
     left = mstr[:lbtrim_len]
     right = mstr[lbtrim_len:]
 
-    trimmed = left + right.splitlines()[0]
+    right_split = right.splitlines()
+
+    trimmed = (left + right_split[0]) if len(right_split) > 0 else left
 
     renderer = ShortdownRenderer()
     md_rend = md.Markdown(renderer=renderer, plugins=[''])
