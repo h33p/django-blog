@@ -15,25 +15,157 @@ h3 {
 }
 
 h4 {
-    color: #b1951d;  
+    color: #b1951d;
+}
+
+.root {
+    display: inline-block;
+    margin: min(10px, 1vw);
+    max-width: 100%;
+    text-align: left;
+    margin-top: min(55px, calc(clamp((1vw - 1vh) * 0.5, 1vh, 0vh) * 5));
 }
 
 .pre-content {
     display: inline-block;
-    margin: min(10px, 1vw);
     max-width: 100%;
     text-align: left;
     background-color: rgba(100, 100, 100, 0.1);
     backdrop-filter: blur(10px);
     box-shadow: 1px 1px 100px #260026;
-    margin-top: min(55px, calc(clamp((1vw - 1vh) * 0.5, 1vh, 0vh) * 10));
-    margin: cubic-bezier(0px, 1px)
 }
 
 .content {
     margin: 30px;
     width: min(90vw, max(60vw, 30cm));
     max-width: max(60vw, 30cm);
+}
+
+.logo {
+    margin: 30px;
+    width: min(90vw, max(60vw, 30cm));
+    max-width: max(60vw, 30cm);
+    display: grid;
+}
+
+.logo1, .logo2 {
+    grid-column: 1;
+    grid-row: 1;
+    text-shadow: 1px 1px 20px #ff86f8;
+    background-codlor: #0a0814;
+}
+
+.logo1{
+    animation: logo-flicker-inv 10s infinite;
+    width:46ch;
+}
+
+.logo2 {
+    animation: logo-flicker 10s infinite;
+    width:46ch;
+}
+
+@keyframes logo-flicker-inv {
+    from {
+        opacity: 0;
+    }
+
+    10.7% {
+        opacity: 0;
+    }
+
+    11% {
+
+        opacity: 1;
+    }
+
+    11.3% {
+
+        opacity: 0;
+    }
+
+    18.7% {
+        opacity: 0;
+    }
+
+    19% {
+        opacity: 1;
+    }
+
+    19.3% {
+        opacity: 0;
+    }
+
+    34.7% {
+        opacity: 0;
+    }
+
+    35% {
+        opacity: 1;
+    }
+
+    58.2% {
+        opacity: 1;
+    }
+
+    58.5% {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+@keyframes logo-flicker {
+    from {
+        opacity: 1;
+    }
+
+    10.7% {
+        opacity: 1;
+    }
+
+    11% {
+
+        opacity: 0;
+    }
+
+    11.3% {
+
+        opacity: 1;
+    }
+
+    18.7% {
+        opacity: 1;
+    }
+
+    19% {
+        opacity: 0;
+    }
+
+    19.3% {
+        opacity: 1;
+    }
+
+    34.7% {
+        opacity: 1;
+    }
+
+    35% {
+        opacity: 0;
+    }
+
+    58.2% {
+        opacity: 0;
+    }
+
+    58.5% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 body {
@@ -48,6 +180,10 @@ body {
 
 .right {
     text-align: right;
+}
+
+.left {
+	text-align: left;
 }
 
 .centered {

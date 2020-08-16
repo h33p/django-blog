@@ -4,8 +4,26 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
 
-<div class="pre-content">
+<div class="root">
 
+	<div class="logo">
+<p class="logo1">
+<a href="/">██████╗ ██╗      █████╗ ███████╗   ██╗███████╗</a><br/>
+<a href="/">██╔══██╗██║     ██╔══██╗╚══███╔╝   ██║██╔════╝</a><br/>
+<a href="/">██████╔╝██║     ███████║  ███╔╝    ██║███████╗</a><br/>
+<a href="/">██╔══██╗██║     ██╔══██║ ███╔╝     ██║╚════██║</a><br/>
+<a href="/">██████╔╝███████╗██║  ██║███████╗██╗██║███████║</a><br/>
+<a href="/">╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝╚══════╝</a>
+</p>
+<pre class=logo2><a href="/">██████╗ ██╗      █████╗ ███████╗   ██╗███████╗</a>
+<a href="/">██╔══██╗██║     ██╔══██╗╚══███╔╝   ██║██╔════╝</a>
+<a href="/">██████╔╝██║     ███████║  ███╔╝    ██║███████╗</a>
+<a href="/">██╔══██╗██║     ██╔══██║ ███╔╝     ██║╚════██║</a>
+<a href="/">██████╔╝███████╗██║  ██║███████╗██╗██║███████║</a>
+<a href="/">╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝╚══════╝</a></pre>
+	</div>
+
+	<div class="pre-content">
 	<ul class="navbar">
 		<li><a href="/"{% if request.path == '/' or '/index' in request.path %} class="active"{% endif %}>Home</a></li>
 		<li><a href="/blog"{% if '/blog' in request.path %} class="active"{% endif %}>Blog</a></li>
@@ -17,5 +35,6 @@
 
 		{% block content %}
 		{% endblock %}
+	</div>
 	</div>
 </div>
