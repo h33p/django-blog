@@ -1,17 +1,50 @@
 {% extends "base.html" %}
+
+	{% load compress %}
+	{% load static %}
 	{% load markdown %}
+
 	{% block content %}
+
+		{% compress css %}
+		<link rel="stylesheet" type="text/x-scss" href="{% static 'scss/pagination.scss' %}">
+		{% endcompress %}
+
 		<div style="display: flex; flex-wrap: wrap;">
 			<div style="max-width: 80%; flex: 80%">
 				<h1 class="centered">{% if category %}{{category}}{% else %}All blog posts{% endif %}</h1>
 				<ul>
-					{% for post in post_list %}
+					{% for post in page_obj %}
 					<h1><a href="{% url 'blog:blog_post' post.slug %}">{{ post.title }}</a></h1>
 					<h4>{{ post.pub_date }} by {{post.posted_by.username}}</h4>
 					<p class = "nocol">{{ post.md_data | shortdown | safe }}</p>
 					<a href="{% url 'blog:blog_post' post.slug %}">Read more</a>
 					{% endfor %}
 				</ul>
+
+				{% if page_obj.has_next or page_obj.has_previous %}
+				<div class="pagination">
+					<span class="step-links">
+						<div class="link-back">
+						{% if page_obj.has_previous %}
+						<a href="?page=1"><<- first</a>
+						<a href="?page={{ page_obj.previous_page_number }}"><- previous</a>
+						{% endif %}
+						</div>
+
+						<span class="current-page">
+							Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+						</span>
+
+						<div class="link-fwd">
+						{% if page_obj.has_next %}
+						<a href="?page={{ page_obj.next_page_number }}">next -></a>
+						<a href="?page={{ page_obj.paginator.num_pages }}">last ->></a>
+						{% endif %}
+						</div>
+					</span>
+				</div>
+				{% endif %}
 			</div>
 			<aside style="max-width: 20%; flex: 20%">
 				<h1>Categories:</h1>
