@@ -47,3 +47,6 @@ class CategoryView(generic.DetailView):
 
         context['categories'] = Category.objects.order_by('name')
         return context
+
+class NewPostView(generic.TemplateView):
+    template_name = 'blog/new_post.html'

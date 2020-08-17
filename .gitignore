@@ -4,3 +4,4 @@ db.sqlite3
 */migrations
 static_data
 *.swp
+secret.key

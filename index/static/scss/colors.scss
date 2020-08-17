@@ -16,6 +16,7 @@ $shadow-color: hsb($basehue, 100, 14.9);
 $glow-color: hsb($basehue - 15, 47.5, 100);
 
 $active-button-color: hsb($basehue, 31.4, 80);
+$active-hovered-button-color: hsb($basehue, 38.4, 100);
 $inactive-button-color: hsb($basehue - 30, 100, 14.9);
 
 $body-color: hsb($alt-hue, 60, 7.8);

@@ -32,6 +32,10 @@ button {
 	display: inline-block;
 }
 
+button:hover {
+	background-color: $active-hovered-button-color;
+}
+
 .root {
     display: inline-block;
     margin: calc(min(10px, 1vw));
