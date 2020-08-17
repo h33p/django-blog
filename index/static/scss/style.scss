@@ -53,7 +53,7 @@ button {
     margin: 30px;
     width: calc(min(90vw, max(60vw, 30cm)));
     max-width: calc(max(60vw, 30cm));
-	overflow: hidden;
+	doverflow: hidden;
 }
 
 .content img {

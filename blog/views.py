@@ -2,16 +2,36 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from .models import *
+from django.core.paginator import Paginator
 
-class IndexView(generic.ListView):
+POSTS_PER_PAGE = 20
+
+class IndexView(generic.TemplateView):
     template_name = 'blog/index.html'
-    context_object_name = 'latest_blog_list'
 
-    def get_queryset(self):
-        return BlogPost.objects.order_by('-pub_date')[:20]
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        posts = BlogPost.objects.order_by('-pub_date')[:(POSTS_PER_PAGE + 1)]
+        context['post_list'] = posts[:POSTS_PER_PAGE]
+        context['categories'] = Category.objects.order_by('name')
+        return context
 
 class BlogPostView(generic.DetailView):
     model = BlogPost
     template_name = 'blog/post.html'
     context_object_name = 'post'
 
+class CategoryView(generic.DetailView):
+    model = Category
+    template_name = 'blog/index.html'
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        object = self.get_object()
+        print(object)
+        print(object.id)
+        posts = BlogPost.objects.filter(categories__id=object.id).order_by('-pub_date')[:(POSTS_PER_PAGE + 1)]
+        context['post_list'] = posts[:POSTS_PER_PAGE]
+        context['categories'] = Category.objects.order_by('name')
+        return context

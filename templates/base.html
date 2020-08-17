@@ -30,12 +30,22 @@
 
 	<div class="pre-content">
 	<ul class="navbar">
-		<li><a href="/"{% if request.path == '/' or '/index' in request.path %} class="active"{% endif %}>Home</a></li>
-		<li><a href="/blog"{% if '/blog' in request.path %} class="active"{% endif %}>Blog</a></li>
-		<li><a href="/portfolio"{% if '/portfolio' in request.path %} class="active"{% endif %}>Portfolio</a></li>
-		<li><a href="/about"{% if '/about' in request.path %} class="active"{% endif %}>About</a></li>
-		<li style="float:right"><a href="/login"{% if '/login' in request.path %} class="active"{% endif %}>Login</a></li>
-		<li style="float:right"><a href="https://photo.blaz.is">Photography</a></li>
+		<a href="/"{% if request.path == '/' or '/index' in request.path %} class="active"{% endif %}>Home</a>
+		<a href="/blog"{% if '/blog' in request.path %} class="active"{% endif %}>Blog</a>
+		<a href="/portfolio"{% if '/portfolio' in request.path %} class="active"{% endif %}>Portfolio</a>
+		<a href="/about"{% if '/about' in request.path %} class="active"{% endif %}>About</a>
+		{% if user.is_authenticated %}
+		<div class="navdrop" style="float:right">
+			<button class="dropbtn">{{user.username}}</button>
+			<div class="navdrop-content">
+				<a href="/account">Account</a>
+				<a href="/logout">Logout</a>
+			</div>
+		</div>
+		{%else %}
+		<a style="float:right" href="/login"{% if '/login' in request.path %} class="active"{% endif %}>Login</a>
+		{% endif %}
+		<a style="float:right" href="https://photo.blaz.is">Photography</a>
 	</ul> 
 
 	<div class="content">
