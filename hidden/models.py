@@ -14,7 +14,7 @@ class MarkdownPage(models.Model):
 
 
 class StaticData(models.Model):
-    file = models.FileField(upload_to = "static_data/statics")
+    file = models.FileField(upload_to = os.path.join(BASE_DIR, "static_data/statics"))
 
     def __str__(self):
         return str(os.path.relpath(self.file.path, BASE_DIR))
