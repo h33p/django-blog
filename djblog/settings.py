@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('./secret.key') as f:
+with open(os.path.join(BASE_DIR, 'secret.key')) as f:
     SECRET_KEY = f.read().strip()
 
-ALLOWED_HOSTS = ['blaz.is', '192.168.1.185', '127.0.0.1']
+ALLOWED_HOSTS = ['blaz.is', 'h33p.pythonanywhere.com', '192.168.1.185', '127.0.0.1']
 
 DEBUG = False
 
@@ -45,6 +45,7 @@ if 'DJANGO_INSECURE' in os.environ:
 INSTALLED_APPS = [
     'compressor',
     'index.apps.IndexConfig',
+    'hidden.apps.HiddenConfig',
     'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -136,7 +137,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'static_data'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_data')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
