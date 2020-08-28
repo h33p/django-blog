@@ -31,20 +31,23 @@
 .highlight pre {
   margin: 10px;
 }
-.highlight .c { color: #2aa1ae } /* + Comment */
+
+$comment: #6a7789
+
+.highlight .c { color: $comment } /* + Comment */
 .highlight .err { color: #e0211d; background-color: #1e0010 } /* + Error */
 .highlight .k { color: #3397dd } /* + Keyword */
 .highlight .l { color: #0d9574 } /* + Literal */
 .highlight .n { color: #afafaf } /* + Name */
-.highlight .o { color: #092672 } /* Operator */
+.highlight .o { color: #3397dd } /* + Operator */
 .highlight .p { color: #ce87d7 } /* + Punctuation */
-.highlight .ch { color: #2aa1ae } /* Comment.Hashbang */
-.highlight .cm { color: #2aa1ae } /* Comment.Multiline */
-.highlight .cp { color: #2aa1ae } /* Comment.Preproc */
-.highlight .cpf { color: #2aa1ae } /* Comment.PreprocFile */
-.highlight .c1 { color: #2aa1ae } /* Comment.Single */
-.highlight .cs { color: #2aa1ae } /* Comment.Special */
-.highlight .gd { color: #2aa1ae } /* Generic.Deleted */
+.highlight .ch { color: $comment } /* Comment.Hashbang */
+.highlight .cm { color: $comment } /* Comment.Multiline */
+.highlight .cp { color: $comment } /* Comment.Preproc */
+.highlight .cpf { color: $comment } /* Comment.PreprocFile */
+.highlight .c1 { color: $comment } /* Comment.Single */
+.highlight .cs { color: $comment } /* Comment.Special */
+.highlight .gd { color: $comment } /* Generic.Deleted */
 .highlight .ge { font-style: italic } /* Generic.Emph */
 .highlight .gi { color: #a6e22e } /* Generic.Inserted */
 .highlight .gs { font-weight: bold } /* Generic.Strong */
