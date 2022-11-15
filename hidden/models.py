@@ -1,8 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 import os
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from djblog.settings import MEDIA_ROOT
 
 class MarkdownPage(models.Model):
     slug = models.SlugField(max_length = 256, primary_key=True, unique=True)
@@ -14,10 +13,10 @@ class MarkdownPage(models.Model):
 
 
 class StaticData(models.Model):
-    file = models.FileField(upload_to = os.path.join(BASE_DIR, "static_data/statics"))
+    file = models.FileField()
 
     def __str__(self):
-        return str(os.path.relpath(self.file.path, BASE_DIR))
+        return str(os.path.relpath(self.file.path, start = MEDIA_ROOT))
 
 @receiver(models.signals.post_delete, sender=StaticData)
 def auto_delete_file_on_delete(sender, instance, **kwargs):

@@ -137,7 +137,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_data')
+STATIC_ROOT = '/usr/share/nginx/django-blog'
+
+MEDIA_ROOT = '/usr/share/nginx/django-blog-media'
+MEDIA_URL = '/media/'
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
