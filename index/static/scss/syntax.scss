@@ -1,5 +1,15 @@
 @import "./colors.scss";
 
+code {
+  color: #ffafd7;
+  background-color: rgba(41, 43, 46, 0.7);
+  backdrop-filter: blur(10px);
+  box-shadow: 1px 1px 20px $shadow-color;
+  padding-left: 2pt;
+  padding-right: 2pt;
+  scrollbar-color: rgba(70, 70, 70, 0.5) rgb(20, 20, 20);
+}
+
 .highlight .hll { background-color: #49483e }
 .highlight {
   color: #5bbcac;
