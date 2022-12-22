@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with open(os.path.join(BASE_DIR, 'secret.key')) as f:
     SECRET_KEY = f.read().strip()
 
-ALLOWED_HOSTS = ['blaz.is', 'h33p.pythonanywhere.com', '192.168.1.185', '127.0.0.1']
+ALLOWED_HOSTS = ['blaz.is', 'h33p.pythonanywhere.com', '192.168.1.185', '127.0.0.1', 'localhost']
 
 DEBUG = False
 
@@ -34,7 +34,7 @@ SECURE_HSTS_SECONDS = 360
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_SSL_REDIRECT = True
 
-if 'DJANGO_INSECURE' in os.environ:
+if 'DJANGO_INSECURE' in os.environ or 'DJANGO_DEVSERVER' in os.environ:
     DEBUG = True
     SECURE_SSL_REDIRECT = False
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
@@ -136,11 +136,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATIC_ROOT = '/usr/share/nginx/django-blog'
 
-MEDIA_ROOT = '/usr/share/nginx/django-blog-media'
 MEDIA_URL = '/media/'
+MEDIA_ROOT = '/usr/share/nginx/django-blog-media'
+
+if 'DJANGO_DEVSERVER' in os.environ:
+    STATIC_ROOT=os.path.abspath('static_root')
+    MEDIA_ROOT=os.path.abspath('media_root')
+    try:
+        os.makedirs(STATIC_ROOT)
+    except:
+        pass
+    try:
+        os.makedirs(MEDIA_ROOT)
+    except:
+        pass
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',

@@ -5,3 +5,5 @@ db.sqlite3
 static_data
 *.swp
 secret.key
+static_root
+media_root

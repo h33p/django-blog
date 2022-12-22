@@ -39,11 +39,11 @@ def guess_lexer(_text, conf_threshold = 0.01, mime_mul = 0.09, **options):
         raise ClassNotFound('no lexer matching the text found')
     return best_lexer[1](**options)
 
-class CustomizedRenderer(md.Renderer):
+class CustomizedRenderer(md.HTMLRenderer):
 
     lt = {}
 
-    def block_code(self, code, lang):
+    def block_code(self, code, lang=None):
         if lang:
             lexer = get_lexer_by_name(lang, stripall=True)
         else:
@@ -57,23 +57,23 @@ class CustomizedRenderer(md.Renderer):
         formatter = HtmlFormatter()
         return highlight(code, lexer, formatter)
 
-    def header(self, text, level, raw=None):
+    def heading(self, text, level):
         if text in self.lt:
             return '<h%d id="%s">%s</h%d>\n' % (level, self.lt[text], text, level) 
         else:
-            return super(CustomizedRenderer, self).header(text, level, raw=raw)
+            return super(CustomizedRenderer, self).heading(text, level)
 
-    def link(self, link, title, text):
+    def link(self, link, text, title):
         if link.startswith("#") and not link[1:] in self.lt:
             self.lt[text] = link[1:]
-        return super(CustomizedRenderer, self).link(link, title, text)
+        return super(CustomizedRenderer, self).link(link, text, title)
 
-class ShortdownRenderer(md.Renderer):
+class ShortdownRenderer(md.HTMLRenderer):
 
-    def header(self, text, level, raw=None):
+    def heading(self, text, level):
         return '%s' % (text)
 
-    def link(self, link, title, text):
+    def link(self, link, text, title):
         return '%s' % escape(text, quote=True)
 
 
@@ -91,12 +91,12 @@ def shortdown(value):
     trimmed = (left + right_split[0]) if len(right_split) > 0 else left
 
     renderer = ShortdownRenderer()
-    md_rend = md.Markdown(renderer=renderer, plugins=[''])
+    md_rend = md.create_markdown(renderer=renderer, plugins=['strikethrough'])
     return md_rend(trimmed)
 
 @register.filter()
 @stringfilter
 def markdown(value):
     renderer = CustomizedRenderer()
-    md_rend = md.Markdown(renderer=renderer)
+    md_rend = md.create_markdown(renderer=renderer, plugins=['task_lists', 'table', 'footnotes', 'strikethrough'])
     return md_rend(value)
