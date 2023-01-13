@@ -3,7 +3,6 @@
 code {
   color: #ffafd7;
   background-color: rgba(41, 43, 46, 0.7);
-  backdrop-filter: blur(10px);
   box-shadow: 1px 1px 20px $shadow-color;
   padding-left: 2pt;
   padding-right: 2pt;
@@ -16,7 +15,6 @@ code {
   background-color: rgba(41, 43, 46, 0.7);
   text-align: left;
   display: inline-block;
-  backdrop-filter: blur(10px);
   box-shadow: 1px 1px 20px $shadow-color;
   max-width: 100%;
   overflow: scroll;
