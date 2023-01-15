@@ -9,6 +9,19 @@ code {
   scrollbar-color: rgba(70, 70, 70, 0.5) rgb(20, 20, 20);
 }
 
+blockquote {
+  background-color: rgba(41, 43, 46, 0.3);
+  font-style: italic;
+  margin: 0;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-left: .25em solid rgba(41, 43, 46, 1);
+  padding-top: 0px;
+  padding-right: 2pt;
+  padding-bottom: 0px;
+  padding-left: 2pt;
+}
+
 .highlight .hll { background-color: #49483e }
 .highlight {
   color: #5bbcac;
