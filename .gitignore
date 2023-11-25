@@ -3,6 +3,7 @@ db.sqlite3
 */*/__pycache__
 */migrations
 static_data
+index/static/js/modules
 *.swp
 secret.key
 static_root

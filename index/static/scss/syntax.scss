@@ -36,6 +36,8 @@ blockquote {
   scrollbar-color: rgba(70, 70, 70, 0.5) rgb(20, 20, 20);
 }
 
+@import "./asciirend.scss";
+
 .highlight::-webkit-scrollbar {
   width: 15px;
   height: 15px;
