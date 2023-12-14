@@ -56,6 +56,12 @@
 				{% for cat in categories %}
 				<h3><a href="{% url 'blog:category_name' cat.slug %}">{{ cat.name }}</a></h3>
 				{% endfor %}
+				<a href="{% url 'blog:rss_feed' %}" style="text-decoration: none">
+					<button type="submit">RSS</button>
+				</a>
+				<a href="{% url 'blog:atom_feed' %}" style="text-decoration: none">
+					<button type="submit">Atom</button>
+				</a>
 			</aside>
 		</div>
 	{% endblock %}

@@ -1,6 +1,7 @@
 from django import template
 from django.template.defaultfilters import stringfilter
 
+import util
 import mistune as md
 from mistune import escape
 from pygments import highlight
@@ -9,38 +10,7 @@ from pygments.formatters import HtmlFormatter
 from pygments.modeline import get_filetype_from_buffer
 from pygments.util import ClassNotFound
 
-import asciirend as ar
-import tomllib
-
 register = template.Library()
-
-def guess_lexer(_text, conf_threshold = 0.01, mime_mul = 0.09, **options):
-    """Guess a lexer by strong distinctions in the text (eg, shebang)."""
-
-    # try to get a vim modeline first
-    ft = get_filetype_from_buffer(_text)
-
-    if ft is not None:
-        try:
-            return get_lexer_by_name(ft, **options)
-        except ClassNotFound:
-            pass
-
-    best_lexer = [0.0, None]
-    for lexer in _iter_lexerclasses():
-        rv = lexer.analyse_text(_text)
-
-        #MIME has an unusually high rv when providing it with any kind of text
-        if 'MIME' in str(lexer):
-            rv *= mime_mul
-
-        if rv == 1.0:
-            return lexer(**options)
-        if rv > best_lexer[0]:
-            best_lexer[:] = (rv, lexer)
-    if not best_lexer[0] or best_lexer[0] < conf_threshold or best_lexer[1] is None:
-        raise ClassNotFound('no lexer matching the text found')
-    return best_lexer[1](**options)
 
 class CustomizedRenderer(md.HTMLRenderer):
 
@@ -51,46 +21,18 @@ class CustomizedRenderer(md.HTMLRenderer):
     def ascii_render(self, code):
         div_id = self.scene_cnt
         self.scene_cnt += 1
-        d = code.split('{', 1)
-        if len(d) == 1:
-            scene = code
-        else:
-            props = tomllib.loads(d[0])
-            scene = '{' + d[1]
-
-        color = int(props['color']) if 'color' in props else 0
-        w = int(props['w']) if 'w' in props else 64
-        h = int(props['h']) if 'h' in props else 32
-        aspect = float(w / (2 * h))
-        ortho = bool(props['ortho']) if 'ortho' in props else True
-        fov = float(props['fov']) if 'fov' in props else 1.0
-        znear = float(props['znear']) if 'znear' in props else 0.1
-        zfar = float(props['zfar']) if 'zfar' in props else 100.0
-
-        self.scene_props[div_id] = {
-            'scene': scene,
-            'w': w,
-            'h': h,
-            'aspect': aspect,
-            'ortho': ortho,
-            'fov': fov,
-            'znear': znear,
-            'zfar': zfar,
-            'dynamic_w': bool(props['dynamic_w']) if 'dynamic_w' in props else False,
-            'dynamic_h': bool(props['dynamic_h']) if 'dynamic_h' in props else False,
-        }
-
-        rendered = ar.ascii_render(scene, color, w, h, aspect, ortho, fov, znear, zfar)
+        props, rendered = util.ascii_render(code)
+        self.scene_props[div_id] = props
         return f'<div class="asciirend" id="asciirend-{div_id}"><pre>{rendered}</pre></div>';
 
-    def block_code(self, code, lang=None):
-        if lang:
-            if lang == 'asciirend':
+    def block_code(self, code, info=None):
+        if info:
+            if info == 'asciirend':
                 return self.ascii_render(code)
-            lexer = get_lexer_by_name(lang, stripall=True)
+            lexer = get_lexer_by_name(info, stripall=True)
         else:
             try:
-                lexer = guess_lexer(code)
+                lexer = util.guess_lexer(code)
             except ClassNotFound:
                 lexer = get_lexer_by_name("html", stripall=True)
 
@@ -105,36 +47,25 @@ class CustomizedRenderer(md.HTMLRenderer):
         else:
             return super(CustomizedRenderer, self).heading(text, level)
 
-    def link(self, link, text, title):
-        if link.startswith("#") and not link[1:] in self.lt:
-            self.lt[text] = link[1:]
-        return super(CustomizedRenderer, self).link(link, text, title)
+    def link(self, text, url, title = None):
+        if url.startswith("#") and not url[1:] in self.lt:
+            self.lt[text] = url[1:]
+        return super(CustomizedRenderer, self).link(text, url, title)
 
 class ShortdownRenderer(md.HTMLRenderer):
 
     def heading(self, text, level):
         return '%s' % (text)
 
-    def link(self, link, text, title):
+    def link(self, text, url, title = None):
         return '%s' % escape(text, quote=True)
-
 
 @register.filter()
 @stringfilter
 def shortdown(value):
-    max_len = 500
-    lbtrim_len = 100
-    mstr = (value[:(max_len - 3)].strip() + "...") if len(value) > max_len else value
-    left = mstr[:lbtrim_len]
-    right = mstr[lbtrim_len:]
-
-    right_split = right.splitlines()
-
-    trimmed = (left + right_split[0]) if len(right_split) > 0 else left
-
     renderer = ShortdownRenderer()
     md_rend = md.create_markdown(renderer=renderer, plugins=['strikethrough'])
-    return md_rend(trimmed)
+    return md_rend(util.trimdown(value))
 
 @register.filter()
 @stringfilter
