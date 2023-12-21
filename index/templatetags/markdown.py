@@ -81,7 +81,7 @@ def markdown(value):
         for i in range(renderer.scene_cnt):
             props = renderer.scene_props[i]
             javascript += f'const scene_{i} = \'{props["scene"].rstrip()}\';\n'
-            javascript += f'ascii_render("asciirend-{i}", scene_{i}, {props["w"] if not props["dynamic_w"] else "null"}, {props["h"] if not props["dynamic_h"] else "null"}, {"true" if props["ortho"] else "false"}, {props["fov"]}, {props["znear"]}, {props["zfar"]});\n'
+            javascript += f'ascii_render("asciirend-{i}", scene_{i}, {props["w"] if not props["dynamic_w"] else "null"}, {props["h"] if not props["dynamic_h"] else "null"}, {"true" if props["ortho"] else "false"}, {props["fov"]}, {props["znear"]}, {props["zfar"]}, {"true" if props["show_usage"] else "false"}, {"true" if props["disable_zoom"] else "false"});\n'
         javascript += """
 </script>
         """

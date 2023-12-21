@@ -71,6 +71,8 @@ def ascii_render(code):
         'zfar': zfar,
         'dynamic_w': bool(props['dynamic_w']) if 'dynamic_w' in props else False,
         'dynamic_h': bool(props['dynamic_h']) if 'dynamic_h' in props else False,
+        'show_usage': bool(props['show_usage']) if 'show_usage' in props else True,
+        'disable_zoom': bool(props['disable_zoom']) if 'disable_zoom' in props else False,
     }
 
     rendered = ar.ascii_render(scene, color, w, h, aspect, ortho, fov, znear, zfar, 0.0)

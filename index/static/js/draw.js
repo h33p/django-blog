@@ -8,13 +8,13 @@ import {
   ProjectionMode,
   set_bg_color,
   set_dither_count_frames,
-  update_camera,
   event_mouse_pos,
   event_mouse_button_state,
   event_focus,
   new_scene,
   add_cube,
   render,
+  set_camera_aspect,
   add_line,
   set_obj_transform,
   color_conv,
@@ -73,34 +73,22 @@ function charWidth(divElement) {
   return [parsedSize / 1.69, parsedSize]
 }
 
-const initialized = init();
-
-export default async function ascii_render(id, scene_json, w, h, is_ortho, fov, znear, zfar) {
-  await initialized;
+export default async function ascii_render(id, scene_json, fw, fh, is_ortho, fov, znear, zfar, showUsage, zoomDisable) {
+  await init();
 
   const conv = color_conv(TermColorMode.SingleCol);
+
   const scene = scene_from_json(scene_json);
 
   const dom = document.getElementById(id);
   const [cw, ch] = charWidth(dom);
 
-  let updateW = false;
-  let updateH = false;
-
-  if (w == null) {
-    w = Math.floor(dom.clientWidth / cw);
-    console.log(w)
-    updateW = true;
-  }
-
-  if (h == null) {
-    h = Math.floor(dom.clientHeight / ch);
-    updateH = true;
-  }
+  let w = fw !== null ? fw : Math.floor(dom.clientWidth / cw);
+  let h = fh !== null ? fh : Math.floor(dom.clientHeight / ch);
 
   console.log(w, h, cw, ch);
 
-  const usage = uiText(scene, "Click and drag", 0, h - 1, w, h);
+  const usage = showUsage ? uiText(scene, "Click and drag", 0, h - 1, w, h) : null;
 
   const startTime = performance.now();
 
@@ -138,7 +126,9 @@ export default async function ascii_render(id, scene_json, w, h, is_ortho, fov, 
   function focusEnter() {
     focused = true;
     event_focus(scene, true);
-    updateUiText(scene, usage, null, 0, h - 1, w, h);
+    if (usage) {
+      updateUiText(scene, usage, null, 0, h - 1, w, h);
+    }
   }
 
   function focusExit() {
@@ -146,11 +136,13 @@ export default async function ascii_render(id, scene_json, w, h, is_ortho, fov, 
     event_mouse_button_state(scene, false, true);
     event_mouse_button_state(scene, false, false);
     event_focus(scene, false)
-    updateUiText(scene, usage, "Click and drag", 0, h - 1, w, h);
+    if (usage) {
+      updateUiText(scene, usage, "Click and drag", 0, h - 1, w, h);
+    }
   }
 
   function scrollEvent(e) {
-    if (focused) {
+    if (focused && !zoomDisable) {
       event_scroll(scene, -e.deltaX, -e.deltaY);
       e.preventDefault();
     }
@@ -169,7 +161,7 @@ export default async function ascii_render(id, scene_json, w, h, is_ortho, fov, 
       const distY = e.touches[0].clientY - e.touches[1].clientY;
       const dist = Math.sqrt(distX * distX + distY * distY);
 
-      if (prevDist !== null) {
+      if (prevDist !== null && !zoomDisable) {
         const diff = dist - prevDist;
         event_scroll(scene, 0, diff);
       }
@@ -202,25 +194,20 @@ export default async function ascii_render(id, scene_json, w, h, is_ortho, fov, 
   });
 
   function nf() {
-    new_frame(scene, is_ortho ? ProjectionMode.Orthographic : ProjectionMode.Perspective, w, h, (w / 2) / h, fov, znear, zfar);
+    set_camera_aspect(scene, (w / 2) / h);
+    new_frame(scene, w, h);
   }
 
   nf()
 
   const v = setInterval(function() {
-    if (updateW) {
-      w = Math.floor(dom.clientWidth / cw);
-      console.log(w)
-    }
-    if (updateH) {
-      h = Math.floor(dom.clientHeight / ch);
-    }
+    w = fw !== null ? fw : Math.floor(dom.clientWidth / cw);
+    h = fh !== null ? fh : Math.floor(dom.clientHeight / ch);
 
     const elapsed = performance.now() - startTime;
     performance.mark("asciirend-start-frame");
 
-    update_camera(scene);
-    const render_res = render(scene, conv, w, h);
+    const render_res = render(scene, conv, w, h, elapsed / 1000);
     performance.mark("asciirend-rendered-frame");
 
     let lines = '<pre style="pointer-events: none;">';
