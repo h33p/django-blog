@@ -61,7 +61,7 @@ def ascii_render(code):
     zfar = float(props['zfar']) if 'zfar' in props else 100.0
 
     params = {
-        'scene': scene,
+        'scene': scene.replace('\n', ''),
         'w': w,
         'h': h,
         'aspect': aspect,
